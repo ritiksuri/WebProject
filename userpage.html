@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stock Report Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #000;
+      color: #ffd700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      min-height: 100vh;
+    }
+
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: #1e1e1e;
+      border-bottom: 1px solid #333;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #ffd700;
+    }
+
+    .home-btn {
+      font-size: 16px;
+      color: #000;
+      background: #ffd700;
+      padding: 6px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .home-btn:hover {
+      background: #fffacd;
+    }
+
+    .username {
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffd700;
+      background: #333;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin-left: 10px;
+    }
+
+    #searchBox {
+      margin: 20px 0;
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1px solid #ffd700;
+      background: #111;
+      color: #ffd700;
+      font-size: 16px;
+      width: 300px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    #searchBox:focus {
+      border-color: #fffacd;
+      box-shadow: 0 0 12px #ffd700;
+    }
+
+    .ticker {
+      width: 95%;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid rgba(255, 215, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      padding: 12px 0;
+      background: #111;
+      margin-bottom: 12px;
+      position: relative;
+      border-radius: 10px;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      gap: 20px;
+      animation: scroll-left 25s linear infinite;
+      padding-left: 100%;
+    }
+
+    .ticker-track.reverse {
+      animation: scroll-right 30s linear infinite;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    @keyframes scroll-right {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(0); }
+    }
+
+    .stock-card {
+      background: #222;
+      padding: 12px;
+      border-radius: 12px;
+      width: 200px;
+      text-align: center;
+      flex-shrink: 0;
+      transition: transform 0.3s ease, background 0.3s, filter 0.3s;
+      border: 1px solid #333;
+      color: #ffd700;
+    }
+
+    .stock-card:hover {
+      transform: translateY(-5px) scale(1.05);
+      filter: invert(100%);
+    }
+
+    .stock-name {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #ffd700;
+    }
+
+    .stock-level {
+      font-size: 14px;
+      margin: 3px 0;
+      color: #f0e68c;
+    }
+
+    .stock-change {
+      font-size: 13px;
+      margin: 3px 0;
+      color: #ffdead;
+      font-weight: bold;
+    }
+
+    .stock-date {
+      font-size: 11px;
+      color: #bdb76b;
+      margin-bottom: 4px;
+    }
+
+    .stock-link {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #ffd700;
+      color: #000;
+      text-decoration: none;
+      font-size: 11px;
+      transition: background 0.3s;
+      font-weight: bold;
+    }
+
+    .stock-link:hover {
+      background: #fffacd;
+      color: #000;
+    }
+
+    .highlight {
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 8px #ffd700;
+    }
+
+    .ticker:hover .ticker-track {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📈 Stock Report Dashboard</h1>
+    <div>
+      <a href="index.html" class="home-btn">Home</a>
+      <span class="username" id="usernameDisplay">Guest</span>
+    </div>
+  </div>
+
+  <input type="text" id="searchBox" placeholder="Search stocks..." />
+  <div id="tickerContainer"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get("user") || "Guest";
+    document.getElementById("usernameDisplay").innerText = username;
+
+    const indianStocks = [
+      "TCS", "Infosys", "HDFC Bank", "Reliance", "Wipro", "SBI", "HCL Tech",
+      "ICICI Bank", "Axis Bank", "Adani", "Bharti Airtel", "L&T", "ITC",
+      "Maruti Suzuki", "Bajaj Finance", "Kotak Bank", "UltraTech Cement", "ONGC",
+      "NTPC", "Tata Steel", "Power Grid", "Tech Mahindra", "Asian Paints",
+      "Hindustan Unilever", "JSW Steel", "Grasim", "Eicher Motors", "M&M", "BPCL",
+      "IndusInd Bank", "Divis Labs", "Cipla", "Sun Pharma", "Dr. Reddy's",
+      "Tata Motors", "Hero MotoCorp", "Coal India", "Shree Cement", "Nestle India",
+      "Britannia", "Apollo Hospitals", "Adani Green", "Adani Ports", "DLF",
+      "Zomato", "Paytm", "Nykaa", "IRCTC", "SBI Life", "Vedanta", "Vodafone Idea",
+      "PNB", "Federal Bank", "YES Bank", "Tata Power", "Ashok Leyland",
+      "Mphasis", "Mindtree", "GAIL", "SAIL", "BHEL", "Godrej Properties"
+    ];
+
+    const stockData = [];
+
+    indianStocks.forEach(name => {
+      stockData.push({
+        name: name,
+        level: (Math.random() * 3000 + 100).toFixed(2),
+        change: (Math.random() * 4 - 2).toFixed(2) + "%",
+        date: "Aug 27, 2025",
+        link: "https://www.moneycontrol.com/stocksmarketsindia/"
+      });
+    });
+
+    const tickerContainer = document.getElementById("tickerContainer");
+
+    for (let row = 0; row < 7; row++) {
+      const ticker = document.createElement("div");
+      ticker.className = "ticker";
+
+      const track = document.createElement("div");
+      track.className = "ticker-track";
+      if (row % 2 === 1) track.classList.add("reverse");
+
+      for (let j = 0; j < 2; j++) {
+        stockData.forEach((stock, index) => {
+          if (index % 7 === row) {
+            const card = document.createElement("div");
+            card.className = "stock-card";
+            card.setAttribute("data-name", stock.name.toLowerCase());
+            card.innerHTML = `
+              <div class="stock-name">${stock.name}</div>
+              <div class="stock-level">Price: ₹${stock.level}</div>
+              <div class="stock-change">Change: ${stock.change}</div>
+              <div class="stock-date">${stock.date}</div>
+              <a class="stock-link" href="${stock.link}" target="_blank">View Report</a>
+            `;
+            track.appendChild(card);
+          }
+        });
+      }
+
+      ticker.appendChild(track);
+      tickerContainer.appendChild(ticker);
+    }
+
+    const searchBox = document.getElementById("searchBox");
+    searchBox.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const cards = document.querySelectorAll(".stock-card");
+
+      cards.forEach(card => {
+        const name = card.getAttribute("data-name");
+        if (name.includes(query)) {
+          card.style.display = "block";
+          card.classList.add("highlight");
+        } else {
+          card.style.display = query ? "none" : "block";
+          card.classList.remove("highlight");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

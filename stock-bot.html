@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Bot</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            width: 450px;
+            height: 700px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #333;
+        }
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-header .status {
+            height: 10px;
+            width: 10px;
+            background: #28a745;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+        .chat-box {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .chat-message {
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        .bot-message {
+            background-color: #333;
+            color: #e0e0e0;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #333;
+        }
+        #userInput {
+            flex-grow: 1;
+            border: 1px solid #444;
+            background-color: #252525;
+            color: #e0e0e0;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        #userInput:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        #sendButton {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        #sendButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <span class="status"></span> Stock Market Bot 📈
+        </div>
+        <div class="chat-box" id="chatBox">
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Ask about Sensex, Nifty, global markets..." onkeydown="handleKey(event)">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const API_KEY = "CYHSGLQLL5W6KRGH";
+
+        sendButton.addEventListener('click', sendMessage);
+        window.addEventListener('load', welcomeMessage);
+
+        function welcomeMessage() {
+            appendMessage("Hello! I can give you real-time stock prices. Try 'Sensex price' or 'Nifty price'.", 'bot-message');
+        }
+
+        function handleKey(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const userText = userInput.value.trim();
+            if (userText === '') return;
+            appendMessage(userText, 'user-message');
+            userInput.value = '';
+            processUserMessage(userText);
+        }
+
+        function appendMessage(text, className) {
+            const messageElement = document.createElement('div');
+            messageElement.className = `chat-message ${className}`;
+            messageElement.textContent = text;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        async function processUserMessage(userText) {
+            const text = userText.toLowerCase();
+            if (text.includes("sensex")) {
+                fetchStock("BSE:500209"); // Example: Infosys on BSE
+            } else if (text.includes("nifty")) {
+                fetchStock("NSE:NIFTY_50"); 
+            } else {
+                appendMessage("I can fetch live prices for Sensex or Nifty. Try typing 'Sensex price'.", 'bot-message');
+            }
+        }
+
+        async function fetchStock(symbol) {
+            try {
+                const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data["Global Quote"] && data["Global Quote"]["05. price"]) {
+                    const price = data["Global Quote"]["05. price"];
+                    appendMessage(`Live price of ${symbol}: ₹${price}`, 'bot-message');
+                } else {
+                    appendMessage("Live data not available. Try again later.", 'bot-message');
+                }
+            } catch (error) {
+                appendMessage("Error fetching stock data.", 'bot-message');
+            }
+        }
+    </script>
+
+</body>
+</html>

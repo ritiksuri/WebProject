@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page - Stock Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* TradingView background container */
+        .tradingview-widget-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+            filter: blur(1px);
+        }
+
+        /* Stock label animation */
+        .stock-label {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Login Box */
+        .login-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            z-index: 1;
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-field {
+            margin: 15px 0;
+            width: 100%;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-field input:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #2575fc;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #6a11cb;
+        }
+
+        .login-container p {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .login-container a {
+            color: #2575fc;
+            text-decoration: none;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Social buttons */
+        .social-login {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            width: 32%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .google { background: #DB4437; }
+        .twitter { background: #1DA1F2; }
+        .email { background: #6a11cb; }
+
+        .social-btn:hover {
+            opacity: 0.85;
+        }
+
+        .forgot-link {
+            display: block;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .forgot-link:hover {
+            color: #2575fc;
+            text-decoration: underline;
+        }
+
+        /* Custom captcha */
+        .captcha-box {
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .captcha-box span {
+            background: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .captcha-box input {
+            width: 50%;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- TradingView Background -->
+    <div class="tradingview-widget-container" id="tv-container"></div>
+
+    <!-- Stock Name Label -->
+    <div class="stock-label" id="stock-label">Loading...</div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <img src="logo.png" alt="Brand Logo" class="brand-logo">
+        <h2>Login</h2>
+        <form onsubmit="event.preventDefault(); validateForm();">
+            <div class="input-field">
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="input-field">
+                <input type="password" placeholder="Password" required>
+            </div>
+
+            <!-- Simple Captcha -->
+            <div class="captcha-box">
+                <span id="captcha-text"></span>
+                <input type="text" id="captcha-input" placeholder="Enter code" required>
+            </div>
+
+            <a href="forgotpage.html" class="forgot-link">Forgot Password?</a>
+            <button type="submit" class="btn">Login</button>
+            
+            <div class="social-login">
+                <button type="button" class="social-btn google" onclick="googleLogin()">Google</button>
+                <button type="button" class="social-btn twitter" onclick="twitterLogin()">Twitter</button>
+                <button type="button" class="social-btn email" onclick="emailLogin()">Email</button>
+            </div>
+
+            <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+        </form>
+    </div>
+
+    <!-- TradingView Script -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        const stocks = [
+            {symbol: "NASDAQ:AAPL", name: "Apple (AAPL)"},
+            {symbol: "NASDAQ:GOOGL", name: "Google (GOOGL)"},
+            {symbol: "NASDAQ:TSLA", name: "Tesla (TSLA)"},
+            {symbol: "NSE:RELIANCE", name: "Reliance (NSE)"}
+        ];
+        let currentStock = 0;
+
+        function loadTradingView(stock) {
+            document.getElementById("tv-container").innerHTML = "";
+            new TradingView.widget({
+                "width": "100%",
+                "height": "100%",
+                "symbol": stock.symbol,
+                "interval": "1",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "hide_side_toolbar": true,
+                "allow_symbol_change": false,
+                "container_id": "tv-container"
+            });
+
+            // Animate stock label
+            const label = document.getElementById("stock-label");
+            label.innerText = stock.name;
+            label.style.opacity = 1;
+            setTimeout(() => label.style.opacity = 0, 8000); // fade out before next stock
+        }
+
+        // Change stock every 10 seconds
+        loadTradingView(stocks[currentStock]);
+        setInterval(() => {
+            currentStock = (currentStock + 1) % stocks.length;
+            loadTradingView(stocks[currentStock]);
+        }, 10000);
+
+        // Simple captcha
+        let captchaCode = "";
+        function generateCaptcha() {
+            captchaCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById("captcha-text").innerText = captchaCode;
+        }
+        generateCaptcha();
+
+        function validateForm() {
+            let userCaptcha = document.getElementById("captcha-input").value.toUpperCase();
+            if (userCaptcha !== captchaCode) {
+                alert("Captcha incorrect! Try again.");
+                generateCaptcha();
+                return;
+            }
+            redirectUser();
+        }
+
+        function redirectUser() {
+            let username = document.getElementById('username').value;
+            if(username) {
+                window.location.href = "userpage.html?user=" + encodeURIComponent(username);
+            } else {
+                alert("Please enter your username");
+            }
+        }
+
+        function googleLogin() { window.location.href = "googleloginpage.html"; }
+        function twitterLogin() { window.location.href = "https://twitter.com/i/flow/login"; }
+        function emailLogin() { window.location.href = "mailto:support@example.com"; }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Report</title>
+  <style>
+    body { background:#000; color:#ffd700; font-family:Arial,sans-serif; text-align:center; margin:0; padding:20px; }
+    .header { display:flex; justify-content:space-between; align-items:center; background:#1e1e1e; padding:10px 20px; }
+    .header h1 { margin:0; font-size:22px; }
+    .home-btn { text-decoration:none; color:#000; background:#ffd700; padding:6px 14px; border-radius:6px; font-weight:bold; }
+    .container { display:flex; flex-wrap:wrap; justify-content:center; margin-top:20px; gap:20px; }
+    .card { background:#1e1e1e; padding:15px; border-radius:10px; width:320px; text-align:center; }
+    .stock-info { margin:8px 0; }
+    canvas { margin-top:10px; background:#222; border-radius:8px; width:100%; height:200px; }
+    .error { color:red; font-weight:bold; margin-top:10px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📊 Stock Reports</h1>
+    <a href="index.html" class="home-btn">Home</a>
+  </div>
+
+  <div class="container" id="stockContainer">
+    <!-- Company cards will be injected here -->
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const apiKey = "CYHSGLQLL5W6KRGH";
+
+    // Add more companies here
+    const companies = ["RELIANCE.BSE", "TCS.BSE", "INFY.BSE", "HDFCBANK.BSE", "SBIN.BSE"];
+
+    // Create company cards dynamically
+    const container = document.getElementById("stockContainer");
+    companies.forEach(symbol => {
+      container.innerHTML += `
+        <div class="card" id="${symbol.replace('.', '_')}">
+          <h2>${symbol}</h2>
+          <div class="stock-info" id="price_${symbol}">Price: Loading...</div>
+          <div class="stock-info" id="time_${symbol}">Last Update: Loading...</div>
+          <canvas id="chart_${symbol}"></canvas>
+          <div class="error" id="error_${symbol}"></div>
+        </div>
+      `;
+    });
+
+    // Store chart instances
+    const charts = {};
+
+    async function fetchStockData(symbol) {
+      try {
+        const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${apiKey}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data["Note"] || !data["Time Series (5min)"]) {
+          document.getElementById(`error_${symbol}`).innerText = "API limit exceeded or no data.";
+          return;
+        }
+
+        document.getElementById(`error_${symbol}`).innerText = "";
+
+        const timeSeries = data["Time Series (5min)"];
+        const times = Object.keys(timeSeries).reverse().slice(-20);
+        const prices = times.map(t => parseFloat(timeSeries[t]["4. close"]));
+
+        document.getElementById(`price_${symbol}`).innerText = `Price: ₹${prices[prices.length - 1].toFixed(2)}`;
+        document.getElementById(`time_${symbol}`).innerText = `Last Update: ${times[times.length - 1]}`;
+
+        // Draw Chart
+        const ctx = document.getElementById(`chart_${symbol}`).getContext("2d");
+        if (charts[symbol]) charts[symbol].destroy();
+        charts[symbol] = new Chart(ctx, {
+          type: "line",
+          data: { labels: times, datasets: [{ label: symbol, data: prices, borderColor: "#ffd700", fill: false }] },
+          options: { scales: { x: { display: false }, y: { beginAtZero: false } } }
+        });
+
+      } catch (err) {
+        document.getElementById(`error_${symbol}`).innerText = "Error fetching data.";
+      }
+    }
+
+    // Load data for all companies
+    function loadAllData() {
+      companies.forEach(symbol => fetchStockData(symbol));
+    }
+
+    loadAllData();
+    setInterval(loadAllData, 60000); // refresh every minute
+  </script>
+</body>
+</html>

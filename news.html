@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Stock Market News — 50 Headlines</title>
+  <style>
+    :root{
+      --accent:#2575fc;
+      --bg:#f8f9fa;
+      --card:#fff;
+      --muted:#777;
+      --text:#222;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    header{
+      background:var(--accent);
+      color:#fff;
+      padding:18px 12px;
+      text-align:center;
+    }
+    header h1{
+      margin:0;
+      font-size:20px;
+      letter-spacing:.2px;
+    }
+    header nav{margin-top:10px}
+    header nav a{
+      color:#fff;
+      text-decoration:none;
+      margin:0 12px;
+      font-weight:500;
+      font-size:14px;
+    }
+    header nav a:hover{text-decoration:underline}
+
+    .news-container{
+      max-width:1200px;
+      margin:22px auto;
+      padding:0 16px 40px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:16px;
+    }
+
+    .news-card{
+      background:var(--card);
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 2px 10px rgba(0,0,0,.06);
+      transition:transform .18s ease,box-shadow .18s ease;
+      display:flex;
+      flex-direction:column;
+      min-height:320px;
+    }
+    .news-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 14px 36px rgba(0,0,0,.12);
+    }
+    .news-card img{
+      width:100%;
+      height:160px;
+      object-fit:cover;
+      display:block;
+    }
+    .news-body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      flex:1;
+    }
+    .news-body h3{
+      margin:0;
+      font-size:16px;
+      line-height:1.25;
+      color:var(--accent);
+    }
+    .news-body h3 a{
+      color:inherit;
+      text-decoration:none;
+    }
+    .news-body h3 a:hover{text-decoration:underline}
+    .news-body p{
+      margin:0;
+      color:#555;
+      font-size:14px;
+      line-height:1.45;
+      flex:1;
+    }
+    .news-body small{
+      color:var(--muted);
+      font-size:12px;
+      display:block;
+    }
+
+    /* responsive tweaks */
+    @media (max-width:420px){
+      .news-card{min-height:300px}
+      header h1{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Stock Market News — Top 50 Headlines</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="userpage.html">Dashboard</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main class="news-container">
+    <!-- 1 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?stocks,market&sig=1" alt="Stocks Rally">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Stocks+Rally+on+Earnings" target="_blank" rel="noopener">Stocks Rally on Earnings</a></h3>
+        <p>Major indices climbed as several large-cap companies posted stronger-than-expected quarterly results.</p>
+        <small>Source: Reuters | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?finance,charts&sig=2" alt="Tech Leads Market">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Tech+Leads+Market+Higher" target="_blank" rel="noopener">Tech Leads Market Higher</a></h3>
+        <p>Technology sector outperformed after strong guidance from several cloud and AI companies.</p>
+        <small>Source: Bloomberg | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?oil,energy&sig=3" alt="Energy Stocks">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Energy+Stocks+Gain+Momentum" target="_blank" rel="noopener">Energy Stocks Gain Momentum</a></h3>
+        <p>Energy names rose as crude futures extended gains on supply concerns overseas.</p>
+        <small>Source: CNBC | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?trading,screen&sig=4" alt="Midcaps">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Midcaps+Outperform+on+Fresh+Buying" target="_blank" rel="noopener">Midcaps Outperform on Fresh Buying</a></h3>
+        <p>Midcap indices outperformed as regional demand indicators showed improvement.</p>
+        <small>Source: Economic Times | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?economy,growth&sig=5" alt="GDP Boost">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=GDP+Beat+Sparks+Risk-On+Sentiment" target="_blank" rel="noopener">GDP Beat Sparks Risk-On Sentiment</a></h3>
+        <p>Equities rallied after the economy posted higher-than-expected quarterly growth figures.</p>
+        <small>Source: CNBC | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?fmcg,products&sig=6" alt="ITC Rallies">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=ITC+Rallies+on+Volume+Growth" target="_blank" rel="noopener">ITC Rallies on Volume Growth</a></h3>
+        <p>FMCG major posted solid volume gains across categories, lifting sentiment in the sector.</p>
+        <small>Source: Business Standard | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?automobile,showroom&sig=7" alt="Auto Stocks">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Automakers+Extend+Winning+Streak" target="_blank" rel="noopener">Automakers Extend Winning Streak</a></h3>
+        <p>Auto shares rose on optimistic festival demand trends and better dealer inventory numbers.</p>
+        <small>Source: LiveMint | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?wallstreet,city&sig=8" alt="Wall Street">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Wall+Street+Mixed+Ahead+of+Data" target="_blank" rel="noopener">Wall Street Mixed Ahead of Data</a></h3>
+        <p>U.S. markets were mixed as investors awaited upcoming economic releases and Fed commentary.</p>
+        <small>Source: WSJ | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?banking,finance&sig=9" alt="PSU Banks">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=PSU+Banks+Jump+on+Reforms+Hopes" target="_blank" rel="noopener">PSU Banks Jump on Reforms Hopes</a></h3>
+        <p>Public sector lenders advanced after policy signals pointing to governance reforms.</p>
+        <small>Source: Moneycontrol | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?currency,rupee&sig=10" alt="Rupee Firms">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Rupee+Firms+IT+Exporters+Cheer" target="_blank" rel="noopener">Rupee Firms; IT Exporters Cheer</a></h3>
+        <p>Export-oriented stocks gained as the currency strengthened against major peers.</p>
+        <small>Source: The Hindu BusinessLine | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 11 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?chip,semiconductor&sig=11" alt="Chip Stocks">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Chip+Stocks+Surge+Post+Earnings" target="_blank" rel="noopener">Chip Stocks Surge Post Earnings</a></h3>
+        <p>Semiconductor companies reported upbeat outlooks, prompting broad sector gains.</p>
+        <small>Source: Barron’s | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 12 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?oilfield,refinery&sig=12" alt="Crude">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Crude+Nears+90+Refiners+Rise" target="_blank" rel="noopener">Crude Nears $90; Refiners Rise</a></h3>
+        <p>Refining firms posted gains as crude prices firmed on supply-side signals.</p>
+        <small>Source: Bloomberg | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 13 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?solar,wind&sig=13" alt="Renewables">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Renewables+Attract+Fresh+Inflows" target="_blank" rel="noopener">Renewables Attract Fresh Inflows</a></h3>
+        <p>Green energy developers saw increased investor participation amid policy support.</p>
+        <small>Source: Financial Times | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 14 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?bollinger,chart&sig=14" alt="Sensex">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Sensex+Reclaims+Key+Level" target="_blank" rel="noopener">Sensex Reclaims Key Level</a></h3>
+        <p>Benchmark index recovered intraday losses to close above a psychological mark.</p>
+        <small>Source: NDTV Profit | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 15 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?nifty,screen&sig=15" alt="Nifty IT">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Nifty+IT+Ends+at+Days+High" target="_blank" rel="noopener">Nifty IT Ends at Day’s High</a></h3>
+        <p>IT index finished strongly on healthy business outlook and deal flows.</p>
+        <small>Source: ET Now | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 16 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?steel,metals&sig=16" alt="Metals">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Metals+Gain+on+China+Stimulus" target="_blank" rel="noopener">Metals Gain on China Stimulus</a></h3>
+        <p>Base metal producers rallied as stimulus hopes in China supported demand prospects.</p>
+        <small>Source: CNBC TV18 | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 17 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?pharmacy,lab&sig=17" alt="Pharma">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Pharma+Stocks+Edge+Higher" target="_blank" rel="noopener">Pharma Stocks Edge Higher</a></h3>
+        <p>Drug makers advanced on stable pricing and healthy new product updates.</p>
+        <small>Source: Mint | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 18 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?it,office&sig=18" alt="Infosys">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Infosys+Sees+Margin+Improvement" target="_blank" rel="noopener">Infosys Sees Margin Improvement</a></h3>
+        <p>Company reported margin expansion driven by higher value services and automation deals.</p>
+        <small>Source: Business Today | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 19 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?bank,branch&sig=19" alt="HDFC Bank">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=HDFC+Bank+Gains+on+Deposit+Growth" target="_blank" rel="noopener">HDFC Bank Gains on Deposit Growth</a></h3>
+        <p>Strong deposit franchise and retail growth supported earnings visibility.</p>
+        <small>Source: Moneycontrol | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 20 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?retail,store&sig=20" alt="Consumer Stocks">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Consumer+Stocks+in+Focus" target="_blank" rel="noopener">Consumer Stocks in Focus</a></h3>
+        <p>Staples and discretionary names attracted flows as consumption indicators improved.</p>
+        <small>Source: Economic Times | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 21 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?technology,ai&sig=21" alt="Global Tech">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Global+Tech+Extends+Rally" target="_blank" rel="noopener">Global Tech Extends Rally</a></h3>
+        <p>Tech-heavy indices climbed as AI spending outlook brightened for vendors.</p>
+        <small>Source: The Verge | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 22 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?currency,forex&sig=22" alt="Dollar">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Dollar+Eases+EMs+Benefit" target="_blank" rel="noopener">Dollar Eases; EMs Benefit</a></h3>
+        <p>Emerging markets rallied modestly as the dollar paused its uptick.</p>
+        <small>Source: FXStreet | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 23 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?bonds,yield&sig=23" alt="Bond Yields">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Bond+Yields+Steady+Pre+Data" target="_blank" rel="noopener">Bond Yields Steady Pre-Data</a></h3>
+        <p>Government yields were range-bound ahead of inflation and jobs data.</p>
+        <small>Source: Investing.com | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 24 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?ipo,stock&sig=24" alt="IPO">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=IPO+Pipeline+Stays+Busy" target="_blank" rel="noopener">IPO Pipeline Stays Busy</a></h3>
+        <p>Primary markets continue to see listings as companies seek public capital.</p>
+        <small>Source: Business Standard | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 25 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?logistics,truck&sig=25" alt="Logistics">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Logistics+Firms+Gain+on+Volumes" target="_blank" rel="noopener">Logistics Firms Gain on Volumes</a></h3>
+        <p>Freight and logistics operators benefitted from rising trade activity and normalization.</p>
+        <small>Source: Reuters | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 26 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?factory,output&sig=26" alt="Manufacturing PMI">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Manufacturing+PMI+Beats+Forecast" target="_blank" rel="noopener">Manufacturing PMI Beats Forecast</a></h3>
+        <p>Factory activity expanded more than expected, helping cyclicals lift.</p>
+        <small>Source: Bloomberg | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 27 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?gold,bullion&sig=27" alt="Gold">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Gold+Slips+as+Risk+Appetite+Improves" target="_blank" rel="noopener">Gold Slips as Risk Appetite Improves</a></h3>
+        <p>Precious metals eased slightly as investors rotated into risk assets.</p>
+        <small>Source: Kitco | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 28 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?analytics,charts&sig=28" alt="Brokerages">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Brokerages+Turn+Positive+on+IT" target="_blank" rel="noopener">Brokerages Turn Positive on IT</a></h3>
+        <p>Analysts upgraded select IT names citing strong deal wins and margin recovery.</p>
+        <small>Source: CLSA Note | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 29 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?startup,entrepreneur&sig=29" alt="Startups">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Startups+Eye+Public+Listings" target="_blank" rel="noopener">Startups Eye Public Listings</a></h3>
+        <p>Several late-stage tech firms prepare for IPOs with favorable market conditions.</p>
+        <small>Source: TechCrunch | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 30 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?realestate,home&sig=30" alt="Realty">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Realty+Stocks+Rise+on+Demand" target="_blank" rel="noopener">Realty Stocks Rise on Demand</a></h3>
+        <p>Developers posted improved pre-sales, driving sectoral optimism.</p>
+        <small>Source: Economic Times | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 31 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?defense,industry&sig=31" alt="Defence">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Defence+Plays+Hit+New+Highs" target="_blank" rel="noopener">Defence Plays Hit New Highs</a></h3>
+        <p>Order wins and stronger capex visibility supported defence stocks.</p>
+        <small>Source: Business Line | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 32 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?insurance,paper&sig=32" alt="Insurers">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Insurers+Gain+on+Premium+Growth" target="_blank" rel="noopener">Insurers Gain on Premium Growth</a></h3>
+        <p>Life and general insurers reported healthy premium inflows for the month.</p>
+        <small>Source: Mint | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 33 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?infrastructure,bridge&sig=33" alt="Infrastructure">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Capex+Boost+Lifts+Infra+Stocks" target="_blank" rel="noopener">Capex Boost Lifts Infra Stocks</a></h3>
+        <p>Infrastructure developers advanced on robust project awards and capital spending visibility.</p>
+        <small>Source: Financial Express | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 34 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?warehouse,logistics&sig=34" alt="Supply Chains">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Supply+Chains+Normalize" target="_blank" rel="noopener">Supply Chains Normalize</a></h3>
+        <p>Supply-side pressures eased, benefiting manufacturers and retailers.</p>
+        <small>Source: Reuters | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 35 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?sugar,commodity&sig=35" alt="Sugar">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Sugar+Stocks+Sweeten+on+Prices" target="_blank" rel="noopener">Sugar Stocks Sweeten on Prices</a></h3>
+        <p>Producers saw gains as global sugar prices firmed on tighter supply.</p>
+        <small>Source: Bloomberg | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 36 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?power,grid&sig=36" alt="Power Utilities">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Power+Utilities+Stay+in+Demand" target="_blank" rel="noopener">Power Utilities Stay in Demand</a></h3>
+        <p>Defensive flows supported power producers amid market rotation.</p>
+        <small>Source: Moneycontrol | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 37 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?telecom,tower&sig=37" alt="Telcos">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Telcos+Gain+on+ARPU+Visibility" target="_blank" rel="noopener">Telcos Gain on ARPU Visibility</a></h3>
+        <p>Improving average revenue per user trends aided telecom sector sentiment.</p>
+        <small>Source: ET Telecom | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 38 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?port,containers&sig=38" alt="Ports">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Ports+%26+Shipping+Advance" target="_blank" rel="noopener">Ports & Shipping Advance</a></h3>
+        <p>Shipping operators benefited from higher throughput and freight rates.</p>
+        <small>Source: Business Standard | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 39 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?vc,investment&sig=39" alt="VC Flows">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=VC+Flows+Return+to+Late-Stage" target="_blank" rel="noopener">VC Flows Return to Late-Stage</a></h3>
+        <p>Funding resumed for revenue-positive startups, improving market sentiment for scale-ups.</p>
+        <small>Source: TechCrunch | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 40 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?agriculture,fields&sig=40" alt="Fertilizer">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Fertilizer+Stocks+Edge+Up" target="_blank" rel="noopener">Fertilizer Stocks Edge Up</a></h3>
+        <p>Seasonal demand pickup supported fertilizer producers and related agri names.</p>
+        <small>Source: Financial Express | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 41 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?cement,plant&sig=41" alt="Cement">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Cement+Firms+See+Price+Hike" target="_blank" rel="noopener">Cement Firms See Price Hike</a></h3>
+        <p>Regional price adjustments improved margins for major cement producers.</p>
+        <small>Source: CNBC TV18 | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 42 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?hospital,clinic&sig=42" alt="Healthcare">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Hospitals+Post+Strong+Footfalls" target="_blank" rel="noopener">Hospitals Post Strong Footfalls</a></h3>
+        <p>Healthcare operators saw improved occupancy and elective procedure trends.</p>
+        <small>Source: Mint | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 43 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?airplane,airport&sig=43" alt="Aviation">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Aviation+Stocks+Gain+Altitude" target="_blank" rel="noopener">Aviation Stocks Gain Altitude</a></h3>
+        <p>Passenger traffic recovery and lower fuel costs supported airline profitability expectations.</p>
+        <small>Source: Business Today | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 44 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?ai,robot&sig=44" alt="AI Spending">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=AI+Spending+to+Lift+IT+Services" target="_blank" rel="noopener">AI Spending to Lift IT Services</a></h3>
+        <p>Analysts expect increased enterprise AI spend to benefit large IT services vendors.</p>
+        <small>Source: Forrester | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 45 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?esg,sustainability&sig=45" alt="ESG Funds">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=ESG+Funds+See+Inflows" target="_blank" rel="noopener">ESG Funds See Inflows</a></h3>
+        <p>Environmentally-focused funds recorded net inflows as investors favor sustainable strategies.</p>
+        <small>Source: Morningstar | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 46 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?steel,factory&sig=46" alt="Steel">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Steel+Prices+Stabilize" target="_blank" rel="noopener">Steel Prices Stabilize</a></h3>
+        <p>Domestic steel prices steadied after recent volatility, aiding producer margins.</p>
+        <small>Source: Platts | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 47 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?software,saas&sig=47" alt="SaaS">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=SaaS+Names+Extend+Gains" target="_blank" rel="noopener">SaaS Names Extend Gains</a></h3>
+        <p>Recurring revenue visibility supported valuations across the SaaS sector.</p>
+        <small>Source: SaaS Insider | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 48 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?warehouse,logistics&sig=48" alt="3PL">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=3PL+Providers+Report+Strong+Q1" target="_blank" rel="noopener">3PL Providers Report Strong Q1</a></h3>
+        <p>Third-party logistics firms reported margin improvements driven by scale and automation.</p>
+        <small>Source: Logistics Now | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 49 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?ecommerce,ads&sig=49" alt="E-commerce">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=E-commerce+Drives+Ad+Spend" target="_blank" rel="noopener">E-commerce Drives Ad Spend</a></h3>
+        <p>Digital advertising platforms saw higher revenue as retailers ramped up campaigns.</p>
+        <small>Source: AdWeek | 28 Aug 2025</small>
+      </div>
+    </article>
+
+    <!-- 50 -->
+    <article class="news-card">
+      <img src="https://source.unsplash.com/400x200/?indices,stock&sig=50" alt="Indices">
+      <div class="news-body">
+        <h3><a href="https://www.google.com/search?q=Indices+End+Week+on+a+High" target="_blank" rel="noopener">Indices End Week on a High</a></h3>
+        <p>Benchmarks closed the week with broad-based gains led by cyclical and tech sectors.</p>
+        <small>Source: Bloomberg | 28 Aug 2025</small>
+      </div>
+    </article>
+    <!-- end of 50 cards -->
+  </main>
+</body>
+</html>

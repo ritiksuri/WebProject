@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Report</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/sentiment@5.0.2/min/sentiment.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Poppins:wght@300&display=swap');
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-content">
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link Home-btn">Home</a></li>
+                    <li><a href="#" class="nav-link screens-btn">Screens</a></li>
+                    <li><a href="news.html" class="nav-link news-btn">News</a></li>
+                    <li><a href="#" class="nav-link Alert-btn">Alert</a></li>
+                    <li><a href="login.html" class="nav-link login-btn">Login/Sign up</a></li>
+                    <li><a href="stock-bot.html" class="nav-link chatbot-btn">Open Stock Market Chatbot</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Alert area -->
+    <div id="stock-alert" class="stock-alert hidden">
+        <span id="alert-text">No alerts currently.</span>
+        <button id="close-alert">&times;</button>
+    </div>
+
+    <h1>Welcome to My Stock Report Website</h1>
+    <p style="text-align:center">Here is our live market assistant to help you.</p>
+
+    <div class="container">
+        <h1>Stock Report</h1>
+        <h3>Stock analysis and screening tool for investors.</h3>
+
+        <div class="search-box">
+            <input type="text" id="ticker-input" placeholder="Search for a Company (e.g., RELIANCE.NS)">
+            <button id="search-btn">Get Data</button>
+        </div>
+
+        <div class="capsules">
+            <span onclick="openCompany('RELIANCE.NS')">Reliance</span>
+            <span onclick="openCompany('TCS.NS')">TCS</span>
+            <span onclick="openCompany('INFY.NS')">Infosys</span>
+            <span onclick="openCompany('HDFCBANK.NS')">HDFC Bank</span>
+            <span onclick="openCompany('ITC.NS')">ITC</span>
+            <span onclick="openCompany('TATASTEEL.NS')">Tata Steel</span>
+            <span onclick="openCompany('SBIN.NS')">SBI</span>
+            <span onclick="openCompany('WIPRO.NS')">Wipro</span>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = "CYHSGLQLL5W6KRGH"; // Your Finnhub API key
+        const stockAlert = document.getElementById('stock-alert');
+        const alertText = document.getElementById('alert-text');
+        const closeAlertBtn = document.getElementById('close-alert');
+        const searchBtn = document.getElementById('search-btn');
+        const tickerInput = document.getElementById('ticker-input');
+
+        // Close alert
+        closeAlertBtn.addEventListener('click', () => stockAlert.classList.add('hidden'));
+
+        // Show alert
+        function showAlert(message) {
+            alertText.innerHTML = message;
+            stockAlert.classList.remove('hidden');
+        }
+
+        // Fetch live stock price
+        async function fetchLivePrice(symbol) {
+            try {
+                const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                return data.c ? data.c.toFixed(2) : "N/A";
+            } catch {
+                return "Error";
+            }
+        }
+
+        // Open company and show price
+        async function openCompany(symbol) {
+            const price = await fetchLivePrice(symbol);
+            showAlert(`${symbol} - Live Price: ₹${price}`);
+        }
+
+        // Search button click
+        searchBtn.addEventListener('click', async () => {
+            const symbol = tickerInput.value.trim().toUpperCase();
+            if (symbol) openCompany(symbol);
+        });
+    </script>
+
+</body>
+</html>

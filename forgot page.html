@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot Password - Stock Report</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f4f7fc;
+    }
+
+    .forgot-container {
+      max-width: 420px;
+      margin: 60px auto;
+      padding: 25px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="email"] {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s ease;
+    }
+
+    input[type="email"]:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: #4CAF50;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #43a047;
+    }
+
+    .btn-clear {
+      background: #f1f1f1;
+      color: #333;
+    }
+
+    .btn-clear:hover {
+      background: #e0e0e0;
+    }
+
+    .btn-back {
+      background: #2196f3;
+      color: #fff;
+    }
+
+    .btn-back:hover {
+      background: #1976d2;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 14px;
+      display: none;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .success {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .error {
+      background: #ffebee;
+      color: #c62828;
+    }
+
+    .loading {
+      background: #fff8e1;
+      color: #ff8f00;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-content">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="stocks.html" class="nav-link">Stocks</a>
+      <a href="tools.html" class="nav-link">Tools</a>
+    </div>
+  </header>
+
+  <!-- Forgot Password Card -->
+  <div class="forgot-container">
+    <h2>Forgot Password</h2>
+    <p>Enter your registered email and we will send you a password reset link.</p>
+    
+    <form id="forgotForm">
+      <input type="email" id="email" placeholder="Enter your email" required>
+      
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary" id="sendBtn">
+          Send Link
+        </button>
+        <button type="button" class="btn btn-clear" id="clearBtn">Clear</button>
+        <button type="button" class="btn btn-back" id="backBtn">Back</button>
+      </div>
+      
+      <p class="message" id="message"></p>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p style="text-align:center;margin-top:40px;">&copy; 2025 Stock Report. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const form = document.getElementById("forgotForm");
+    const emailInput = document.getElementById("email");
+    const message = document.getElementById("message");
+    const clearBtn = document.getElementById("clearBtn");
+    const backBtn = document.getElementById("backBtn");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const API_URL = "https://your-backend.com/api/auth/forgot-password"; // change this
+
+    function showMessage(text, type) {
+      message.style.display = "block";
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    async function sendRequest(email) {
+      sendBtn.disabled = true;
+      sendBtn.innerHTML = `<div class="spinner"></div> Sending...`;
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showMessage(data.message || "Reset link sent successfully!", "success");
+        } else {
+          showMessage(data.message || "Email not found.", "error");
+        }
+      } catch (err) {
+        showMessage("Server error. Please try again later.", "error");
+      }
+
+      sendBtn.disabled = false;
+      sendBtn.textContent = "Send Link";
+    }
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+
+      if (!email || !email.includes("@")) {
+        showMessage("Please enter a valid email address.", "error");
+        return;
+      }
+
+      showMessage("Sending request...", "loading");
+      sendRequest(email);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      emailInput.value = "";
+      message.style.display = "none";
+    });
+
+    backBtn.addEventListener("click", () => {
+      window.location.href = "login.html";
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") message.style.display = "none";
+      if (e.key === "Enter" && document.activeElement !== sendBtn) form.requestSubmit();
+    });
+  </script>
+
+</body>
+</html>
