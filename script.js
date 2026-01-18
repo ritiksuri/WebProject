@@ -1,4 +1,4 @@
-const API_KEY = "d2n0ad9r01qsk3opra8gd2n0ad9r01qsk3opra90";
+const API_KEY = "CYHSGLQL6KRGL5WH";
 
 const stockAlert = document.getElementById('stock-alert');
 const alertText = document.getElementById('alert-text');
